@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Bluetooth chat</string>
+
+    <string name="title_pairing_dialog">Select device</string>
+    <string name="discover_new_devices">Discover new</string>
+
+    <string name="become_visible_text">Become visible</string>
+    <string name="connected">Connected</string>
+    <string name="not_connected">Not connected</string>
+</resources>

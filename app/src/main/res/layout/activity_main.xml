@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.sanicorporation.bluetoothchat.activity.MainViewModel" />
+        <variable
+            name="activity"
+            type="com.sanicorporation.bluetoothchat.activity.MainActivity" />
+        <import type="android.view.View"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.MainActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttons_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/connection_state"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@{viewmodel.connectedDevice ? @string/connected : @string/not_connected}"
+                tools:text="Connected"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <Button
+                android:id="@+id/bt_become_visible_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/connect_bluetooth_button"
+                app:layout_constraintLeft_toRightOf="@id/connection_state"
+                android:text="@string/become_visible_text"
+                android:enabled="@{!viewmodel.isDeviceVisible}"
+                android:drawableEnd="@{viewmodel.isDeviceVisible ? @drawable/ic_bt_visible : @drawable/ic_bt_invisible}"
+                android:drawableRight="@{viewmodel.isDeviceVisible ? @drawable/ic_bt_visible : @drawable/ic_bt_invisible}" />
+
+            <ImageButton
+                android:id="@+id/connect_bluetooth_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_connect_bluetooth"
+                android:layout_gravity="end"
+                app:layout_constraintLeft_toRightOf="@id/bt_become_visible_button"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/messages_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/buttons_linear"
+            app:layout_constraintBottom_toTopOf="@id/constraint_bottom"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <EditText
+                android:id="@+id/text_enter_message"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/strong_gray"
+                android:enabled="@{viewmodel.connectedDevice}"
+                android:maxHeight="100dp"
+                android:padding="5dp"
+                android:text="@={viewmodel.message}"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/send_text_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/send_text_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_send"
+                android:enabled="@{viewmodel.connectedDevice}"
+                app:layout_constraintLeft_toRightOf="@id/text_enter_message"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
